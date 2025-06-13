@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import * as bcrypt from "bcrypt";
@@ -33,7 +33,7 @@ export class UsersService {
 
   async update(id: number, dto: UpdateUserDto): Promise<User> {
     const user = await this.findById(id);
-    if (!user) throw new Error("User not found");
+    if (!user) throw new NotFoundException("User not found");
     if (dto.fullName !== undefined) {
       user.fullName = dto.fullName;
     }
